@@ -1,0 +1,38 @@
+import "./styles.css";
+import axios from 'axios'
+import { useEffect, useState } from "react";
+export default function App() {
+  const[load,SetLoad]=useState(false);
+  const[posts,SetPosts]=useState([]);
+  const[searchTitle,SetSearchTitle]=useState("");
+  useEffect(()=>{
+    const loadPosts = async()=>{
+SetLoad(true);
+const response = await axios.get("https://jsonplaceholder.typicode.com/posts");
+SetPosts(response.data);
+SetLoad(false)
+    }
+    loadPosts();
+  },[])
+  return (
+    <div class="text-center">
+    <h4 class="display-2 my-5">Search</h4>
+    <input type="text" placeholder="search...." onChange={(e)=>SetSearchTitle(e.target.value)}></input>
+   <div class="my-5">
+    {load ?(<p>Loading . . .</p>) :
+    (
+      posts.filter((value)=>{
+        if(searchTitle===""){
+          return value;
+        }else if(value.title.toLowerCase().includes(searchTitle.toLowerCase())){
+          return value;
+        }
+      })
+      
+      .map((item)=><h5 key={item.id}>{item.title}</h5>)
+    )
+  }
+  </div>
+    </div>
+  );
+}
