@@ -1,0 +1,51 @@
+import { BsPower } from "react-icons/bs";
+import { ToastContainer, toast } from "react-toastify";
+import "react-toastify/dist/ReactToastify.css";
+import { useNavigate } from "react-router-dom";
+
+export default function AppBar() {
+  const navigate = useNavigate();
+
+  return (
+    <>
+      <ToastContainer />
+      <nav class="navbar navbar-expand-lg navbar-dark">
+        <div class="container-fluid d-flex justify-content-end">
+          <ul class="navbar-nav d-flex flex-row">
+            <li class="nav-item me-3 me-lg-0 dropdown">
+              <a
+                class="nav-link dropdown-toggle"
+                id="navbarDropdown"
+                role="button"
+                data-mdb-toggle="dropdown"
+                aria-expanded="false"
+              >
+                <i class="fas fa-user"></i> ADMIN
+              </a>
+              <ul class="dropdown-menu" aria-labelledby="navbarDropdown">
+                <li>
+                  <a
+                    class="dropdown-item text-danger"
+                    onClick={() => {
+                      toast.success("Logout Successfully", {
+                        autoClose: 1000,
+                        theme: "colored",
+                        draggable: true,
+                        pauseOnFocusLoss: true
+                      });
+                      setTimeout(() => {
+                        navigate("/");
+                      }, 1000);
+                    }}
+                  >
+                    LOGOUT <BsPower />
+                  </a>
+                </li>
+              </ul>
+            </li>
+          </ul>
+        </div>
+      </nav>
+    </>
+  );
+}
